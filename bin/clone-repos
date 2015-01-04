@@ -6,5 +6,8 @@
 require_relative '../../fission/fission/fission_dependencies.rb'
 
 FissionDependencies::GEMS.each do |gem|
-  `git clone -b develop git@github.com:heavywater/#{gem}.git ../fission/#{gem}`
+  dir = "../fission/#{gem}"
+  `git clone -b develop git@github.com:heavywater/#{gem}.git #{dir}`
+  # give VM access to directory
+  `chmod -R a+w #{dir}`
 end
