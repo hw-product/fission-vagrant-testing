@@ -1,3 +1,4 @@
 site 'https://supermarket.getchef.com/api/v1'
 
-cookbook 'vagabond', git: 'git://github.com/chrisroberts/chef-vagabond.git', :ref => 'develop'
+cookbook 'vagabond', :git => 'git://github.com/chrisroberts/chef-vagabond.git', :ref => 'develop'
+cookbook 'fission-vagrant', :path => 'site-cookbooks/fission-vagrant'
