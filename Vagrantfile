@@ -12,9 +12,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.cookbooks_path = 'cookbooks/'
     chef.roles_path = '.'
     chef.data_bags_path = '.'
-    chef.add_recipe 'vagabond'
-    chef.json = {vagabond: { bases: { centos_5: {enabled: false},
-                                      debian_6: {enabled: false},
-                                      debian_7: { enabled: false} }}}
+    chef.add_recipe 'fission-vagrant'
+    chef.json = {
+      :fission_vagrant => {
+        :ssh_key => File.read(ENV['FISSION_SSH_KEY_PATH'])
+      },
+      :vagabond => {
+        :bases => { :centos_5 => { :enabled => false},
+          :debian_6 => { :enabled => false},
+          :debian_7 => { :enabled => false}
+        }
+      },
+      :postgresql => {
+        :enable_pgdg_apt => true,
+        :version => '9.3',
+        :password => { 'postgres' => 'awfarts' } }
+    }
   end
 end
