@@ -8,6 +8,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'precise64'
   config.vm.synced_folder '../fission', '/fission', owner: fission_owner
 
+  # requires vagrant-omnibus plugin
+  config.omnibus.chef_version = '11.18.0'
+
+  # ensure the apt-get cache is up to date
+  config.vm.provision :shell, :inline => "sudo apt-get update"
+
   config.vm.provision 'chef_solo' do |chef|
     chef.cookbooks_path = 'cookbooks/'
     chef.roles_path = '.'
