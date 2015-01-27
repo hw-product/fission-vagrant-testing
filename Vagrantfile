@@ -4,6 +4,10 @@ VAGRANTFILE_API_VERSION = '2'
 
 fission_owner = (ENV['INITIAL'] == 'true') ? 'vagrant' : 'dev'
 
+ssh_key_path = 'FISSION_SSH_KEY_PATH'
+raise("#{ssh_key_path} must be set to the path of the appropriate ssh key " +
+      "to allow vagrant to interact with fission repos on github")
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'hashicorp/precise64'
   config.vm.synced_folder '../fission', '/fission', owner: fission_owner
@@ -21,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe 'fission-vagrant'
     chef.json = {
       :fission_vagrant => {
-        :ssh_key => File.read(ENV['FISSION_SSH_KEY_PATH'])
+        :ssh_key => File.read(ENV[ssh_key_path])
       },
       :vagabond => {
         :bases => { :centos_5 => { :enabled => false},
