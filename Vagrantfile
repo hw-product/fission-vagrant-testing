@@ -5,8 +5,9 @@ VAGRANTFILE_API_VERSION = '2'
 fission_owner = (ENV['INITIAL'] == 'true') ? 'vagrant' : 'dev'
 
 ssh_key_path = 'FISSION_SSH_KEY_PATH'
-raise("#{ssh_key_path} must be set to the path of the appropriate ssh key " +
-      "to allow vagrant to interact with fission repos on github")
+msg = "#{ssh_key_path} must be set to the path of the appropriate ssh key " +
+  "to allow vagrant to interact with fission repos on github"
+raise msg unless ENV[ssh_key_path]
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'hashicorp/precise64'
