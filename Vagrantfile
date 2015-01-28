@@ -2,8 +2,6 @@
 # vi: set ft=ruby :
 VAGRANTFILE_API_VERSION = '2'
 
-fission_owner = (ENV['INITIAL'] == 'true') ? 'vagrant' : 'dev'
-
 ssh_key_path = 'FISSION_SSH_KEY_PATH'
 msg = "#{ssh_key_path} must be set to the path of the appropriate ssh key " +
   "to allow vagrant to interact with fission repos on github"
@@ -11,7 +9,7 @@ raise msg unless ENV[ssh_key_path]
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'hashicorp/precise64'
-  config.vm.synced_folder '../fission', '/fission', owner: fission_owner
+  config.vm.synced_folder '../fission', '/fission', owner: 'vagrant'
 
   # requires vagrant-omnibus plugin
   config.omnibus.chef_version = '11.18.0'
